@@ -22,14 +22,64 @@
 // you can use the "Extended Asm" documentation for GNU GCC 
 // https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html
 
-void sort(uint32_t *array, int len)
-{
-	// implement sorting strategy here
+void sort(uint32_t *array, int len) {
+    for(int i = 0 ; i < len ; i++)
+    {
+        for(int j = i+1 ; j < len - 1 ; j++) 
+        {
+            if(array[j] < array[i])
+            {
+                //swapping 
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp; 
+            }
+        }
+    }
 }
 
+void heapify(int arr[], int n, int i) {
+    int largest = i; // Initialize largest as root
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    // If left child is larger   than root
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    // If right child is larger than largest so far
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // If root is not largest
+    if (largest != i) {
+        // Swap the root with the largest
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+
+        // Recursively heapify the affected sub-tree
+        heapify(arr, n, largest); 
+    }
+}
+
+//heapsort
 void optimized_sort(uint32_t *array, int len)
 {
-	// implement the optimized version of the sorting strategy here
+	  // Build max heap
+    for (int i = len / 2 - 1; i >= 0; i--)
+        heapify(array, len, i);
+
+    // One by one extract elements from the heap
+    for (int i = len - 1; i >= 0; i--) {
+        // Move the current root to the end
+        int temp = array[0];
+        array[0] = array[i];
+        array[i] = temp;
+
+        // Call max heapify on the reduced heap
+        heapify(array, i, 0);
+    }
 }
 
 void print_array(uint32_t *array, int len)
@@ -56,9 +106,10 @@ int main(void)
 	double avg_cycles = 0.0f, avg_seconds = 0.0f, total_seconds = 0.0f; 
 
 	// declare necessary variables here
-	uint32_t array1[100]; // static array definition
-	uint32_t *array2 = (uint32_t *)malloc(100 * sizeof(uint32_t)); // dynamic array definition
+	uint32_t array1[10000]; // static array definition
+	uint32_t *array2 = (uint32_t *)malloc(10000 * sizeof(uint32_t)); // dynamic array definition
 
+	clock_t start , end , total = 0 ;
 	for (int run = 0; run < RUNS; ++run) {
 		// compute the CPUID overhead
 		pushad();
@@ -91,18 +142,24 @@ int main(void)
 	
 		cycles_high1 = cycles_low1 = 0;
 	
+
 		// measure start timestamp
 		pushad();
 		cpuid();
 		rdtsc(cycles_low1, cycles_high1);
 		popad();
-	
+
+		
 		// section of code to be measured
+		start= clock(); 
 		// after measuting the execution time for both array1 and array2 using the sort function
 		// do the same for the optimized sort 
-		//optimized_sort(array1, 100);
-		sort(array1, 100);
-	
+		optimized_sort(array1, 10000);
+		// sort(array1, 10000);
+
+		// optimized_sort(array2, 10000);
+		// sort(array2, 10000);
+		end = clock(); 
 		// measure stop timestamp
 		pushad();
 		cpuid();
@@ -114,16 +171,22 @@ int main(void)
 		temp_cycles2 = ((uint64_t)cycles_high2 << 32) | cycles_low2;
 		total_cycles = temp_cycles2 - temp_cycles1 - cpuid_time;
 		avg_cycles += total_cycles;
+
+		total = total + (end - start);
 	}
 
 	avg_cycles /= (double)RUNS;
 	avg_seconds = avg_cycles / (double)FREQUENCY;
 	total_seconds = (double) total_cycles / (double)FREQUENCY;
 
+	total = total/RUNS; 
+
 	printf("Average cycles = %lf\n", avg_cycles);
 	printf("Average seconds = %lf\n", avg_seconds);
 	printf("Cycles (last run) = %lld\n", total_cycles);
 	printf("Seconds (last run) = %lf\n", total_seconds);
+
+	printf("the total clock cycles are : %d\n", total);
 	return 0;
 }
 

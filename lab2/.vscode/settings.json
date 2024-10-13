@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.tcc": "c",
+        "stdint.h": "c"
+    }
+}
