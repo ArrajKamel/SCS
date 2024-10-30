@@ -22,9 +22,15 @@ architecture beh of carry_block is
         P3 <= x(3) or y(3);
         G3 <= x(3) and y(3);
         
+        --//need to modify, this is correct for the four bit adder but it is not carry lookahead adder :)
+        -- cout(0) <= G0 or (P0 and cin);
+        -- cout(1) <= G1 or (P1 and cout(0));
+        -- cout(2) <= G2 or (P2 and cout(1));
+        -- cout(3) <= G3 or (P3 and cout(2));
+
         cout(0) <= G0 or (P0 and cin);
-        cout(1) <= G1 or (P1 and cout(0));
-        cout(2) <= G2 or (P2 and cout(1));
-        cout(3) <= G3 or (P3 and cout(2));
+        cout(1) <= G1 or (P1 and (G0 or (P0 and cin)));
+        cout(2) <= G2 or (P2 and (G1 or (P1 and (G0 or (P0 and cin)))));
+        cout(3) <= G3 or (P3 and (G2 or (P2 and (G1 or (P1 and (G0 or (P0 and cin)))))));
 
     end beh; 
