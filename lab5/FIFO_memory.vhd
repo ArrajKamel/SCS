@@ -10,7 +10,7 @@ entity FIFO_memory is
         rdinc, wrinc : in std_logic; 
         clk, reset   : in std_logic; 
         data_in      : in std_logic_vector(7 downto 0);
-        data_out     : in std_logic_vector(7 downto 0)
+        data_out     : out std_logic_vector(7 downto 0)
     );
 end entity; 
 
@@ -29,7 +29,7 @@ architecture struct of FIFO_memory is
         );
     end component; 
 
-    component register is 
+    component reg is 
         port(
             clk, en, reset : in std_logic; 
             data_in        : in std_logic_vector(7 downto 0); 
@@ -71,7 +71,6 @@ architecture struct of FIFO_memory is
 
     signal s_mux_out : std_logic_vector(7 downto 0) := (others => '0');
 
-
     begin 
 
         writepointer : pointer_register port map(
@@ -90,72 +89,72 @@ architecture struct of FIFO_memory is
                     
 
         decoder : decoder3_8 port map (
-            data_in => wrptr, 
+            data_in => s_wrptr, 
             data_out => s_decoder_out 
         );
 
-        fifo_0 : register port map(
+        fifo_0 : reg port map(
             clk => clk, 
-            en => s_decoder_out(0) and wr;
-            reset => reset; 
+            en => s_decoder_out(0) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(0);
+            data_out => s_mux_in(0)
         );
         
-        fifo_1 : register port map(
+        fifo_1 : reg port map(
             clk => clk, 
-            en => s_decoder_out(1) and wr;
-            reset => reset; 
+            en => s_decoder_out(1) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(1);
+            data_out => s_mux_in(1)
         );
 
-        fifo_2 : register port map(
+        fifo_2 : reg port map(
             clk => clk, 
-            en => s_decoder_out(2) and wr;
-            reset => reset; 
+            en => s_decoder_out(2) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(2);
+            data_out => s_mux_in(2)
         );
 
-        fifo_3 : register port map(
+        fifo_3 : reg port map(
             clk => clk, 
-            en => s_decoder_out(3) and wr;
-            reset => reset; 
+            en => s_decoder_out(3) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(3);
+            data_out => s_mux_in(3)
         );
 
-        fifo_4 : register port map(
+        fifo_4 : reg port map(
             clk => clk, 
-            en => s_decoder_out(4) and wr;
-            reset => reset; 
+            en => s_decoder_out(4) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(4);
+            data_out => s_mux_in(4)
         );
 
-        fifo_5 : register port map(
+        fifo_5 : reg port map(
             clk => clk, 
-            en => s_decoder_out(5) and wr;
-            reset => reset; 
+            en => s_decoder_out(5) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(5);
+            data_out => s_mux_in(5)
         );
 
-        fifo_6 : register port map(
+        fifo_6 : reg port map(
             clk => clk, 
-            en => s_decoder_out(6) and wr;
-            reset => reset; 
+            en => s_decoder_out(6) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(6);
+            data_out => s_mux_in(6)
         );
 
-        fifo_7 : register port map(
+        fifo_7 : reg port map(
             clk => clk, 
-            en => s_decoder_out(7) and wr;
-            reset => reset; 
+            en => s_decoder_out(7) and wr,
+            reset => reset, 
             data_in => data_in, 
-            data_out => s_mux_in(7);
+            data_out => s_mux_in(7)
         );
 
         MUX : MUX8_1 port map (
@@ -167,7 +166,7 @@ architecture struct of FIFO_memory is
             reg5 => s_mux_in(5),
             reg6 => s_mux_in(6),
             reg7 => s_mux_in(7),
-            sel  => rdptr, 
+            sel  => s_rdptr, 
             data_out => s_mux_out
         );
 
@@ -176,6 +175,7 @@ architecture struct of FIFO_memory is
             enable  => rd, 
             data_out => data_out
         );
+
 
     end struct ; 
     

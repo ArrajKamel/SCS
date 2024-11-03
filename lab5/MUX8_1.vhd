@@ -20,14 +20,16 @@ end entity;
 
 architecture beh of MUX8_1 is 
     begin
-        data_out <= reg0 when sel == "000";
-        data_out <= reg1 when sel == "001";
-        data_out <= reg2 when sel == "010";
-        data_out <= reg3 when sel == "011";
-        data_out <= reg4 when sel == "100";
-        data_out <= reg5 when sel == "101";
-        data_out <= reg6 when sel == "110";
-        data_out <= reg7 when others;
+        with sel select 
+        data_out <= 
+             reg0 when  "000",
+             reg1 when  "001",
+             reg2 when  "010",
+             reg3 when  "011",
+             reg4 when  "100",
+             reg5 when  "101",
+             reg6 when  "110",
+             reg7 when others;
     end beh; 
     
 

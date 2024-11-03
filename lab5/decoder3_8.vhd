@@ -12,12 +12,13 @@ end entity;
 
 architecture beh of decoder3_8 is 
     begin
-        data_out <= "00000000" when data_in == "000";
-                    "00000010" when data_in == "001";
-                    "00000100" when data_in == "010";
-                    "00001000" when data_in == "011";
-                    "00010000" when data_in == "100";
-                    "00100000" when data_in == "101";
-                    "01000000" when data_in == "110";
+        with data_in select 
+        data_out <= "00000000" when "000";
+                    "00000010" when "001";
+                    "00000100" when "010";
+                    "00001000" when "011";
+                    "00010000" when "100";
+                    "00100000" when "101";
+                    "01000000" when "110";
                     "10000000" when others;
     end beh; 

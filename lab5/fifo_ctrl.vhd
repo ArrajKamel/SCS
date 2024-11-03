@@ -22,7 +22,7 @@ architecture beh of fifo_ctrl is
                     wrinc <= '0';
                 end if; 
                 if rising_edge(clk) then 
-                    reinc <= rd; 
+                    rdinc <= rd; 
                     wrinc <= wr;
                 end if ; 
             end process; 

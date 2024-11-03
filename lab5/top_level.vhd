@@ -37,7 +37,7 @@ architecture struct of top_level is
             rdinc, wrinc : in std_logic; 
             clk, reset   : in std_logic; 
             data_in      : in std_logic_vector(7 downto 0);
-            data_out     : in std_logic_vector(7 downto 0)
+            data_out     : out std_logic_vector(7 downto 0)
         );
     end component;
 
@@ -73,15 +73,17 @@ architecture struct of top_level is
         CU : fifo_ctrl port map (
             -- empty => empty, 
             -- full => full,
-            rd => s_filtr_out(0),
-            wr => s_filtr_out(1),
+            rd => s_filters_out(0),
+            wr => s_filters_out(1),
             clk => clk , 
             reset => reset, 
             rdinc => s_fifo_ctrl_out(0),
             wrinc => s_fifo_ctrl_out(1)
         );
 
-        FM : FIFO_memroy port map (
+        FM : FIFO_memory port map (
+            clk => clk, 
+            reset => reset,
             rd => s_filters_out(0),
             wr => s_filters_out(1),
             rdinc => s_fifo_ctrl_out(0),
