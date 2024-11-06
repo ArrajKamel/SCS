@@ -10,17 +10,18 @@ entity pointer_register is
     );
 end entity; 
 
-architecture beh of pointer_register is 
+architecture beh of pointer_register is
+    signal s_data_out : std_logic_vector(2 dowonto 0) := (others -> '0'); 
     begin
-        process (clk, en, reset)
+        process (clk, reset)
             begin
                 if reset = '1' then 
-                    data_out <= "000";
-                end if; 
-                if rising_edge(clk) then 
+                    s_data_out <= "000";
+                elsif rising_edge(clk) then 
                     if en = '1' then 
-                        data_out <= data_out + '1'; 
+                        s_data_out <= data_out + 1; 
                     end if ; 
                 end if ; 
             end process ; 
+            data_out <= s_data_out; 
     end beh; 

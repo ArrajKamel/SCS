@@ -59,6 +59,7 @@ architecture struct of FIFO_memory is
             data_out : out STD_LOGIC_VECTOR(7 downto 0)  
         );
     end component;
+    signal temp : std_logic_vector(7 downto 0) := (others => '0'); 
 
     signal s_wrptr, s_rdptr : std_logic_vector(2 downto 0) := (others => '0');
     signal s_decoder_out    : std_logic_vector(7 downto 0) := (others => '0');
@@ -92,66 +93,71 @@ architecture struct of FIFO_memory is
             data_in => s_wrptr, 
             data_out => s_decoder_out 
         );
-
+        
+        temp(0)temp(1) <= s_decoder_out(1) and wr;  <= s_decoder_out(0) and wr;
         fifo_0 : reg port map(
             clk => clk, 
-            en => s_decoder_out(0) and wr,
+            en => temp(0),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(0)
         );
-        
+
+        temp(1) <= s_decoder_out(1) and wr; 
         fifo_1 : reg port map(
             clk => clk, 
-            en => s_decoder_out(1) and wr,
+            en => temp(1),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(1)
         );
-
+        temp(2) <= s_decoder_out(2) and wr; 
         fifo_2 : reg port map(
             clk => clk, 
-            en => s_decoder_out(2) and wr,
+            en => temp(2),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(2)
         );
 
+        temp(3) <= s_decoder_out(3) and wr; 
         fifo_3 : reg port map(
             clk => clk, 
-            en => s_decoder_out(3) and wr,
+            en => temp(3),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(3)
         );
 
+        temp(4) <= s_decoder_out(4) and wr; 
         fifo_4 : reg port map(
             clk => clk, 
-            en => s_decoder_out(4) and wr,
+            en => temp(4),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(4)
         );
-
+        temp(5) <= s_decoder_out(5) and wr; 
         fifo_5 : reg port map(
             clk => clk, 
-            en => s_decoder_out(5) and wr,
+            en => temp(5),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(5)
         );
-
+        
+        temp(6) <= s_decoder_out(6) and wr; 
         fifo_6 : reg port map(
             clk => clk, 
-            en => s_decoder_out(6) and wr,
+            en => temp(6),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(6)
         );
-
+        temp(7) <= s_decoder_out(7) and wr; 
         fifo_7 : reg port map(
             clk => clk, 
-            en => s_decoder_out(7) and wr,
+            en => temp(7),
             reset => reset, 
             data_in => data_in, 
             data_out => s_mux_in(7)
