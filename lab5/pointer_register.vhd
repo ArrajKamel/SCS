@@ -14,11 +14,11 @@ architecture beh of pointer_register is
     begin
         process (clk, en, reset)
             begin
-                if reset == '1' then 
-                    data_out <= "0000000";
+                if reset = '1' then 
+                    data_out <= "000";
                 end if; 
                 if rising_edge(clk) then 
-                    if en == '1' then 
+                    if en = '1' then 
                         data_out <= data_out + '1'; 
                     end if ; 
                 end if ; 

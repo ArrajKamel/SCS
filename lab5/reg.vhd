@@ -16,7 +16,7 @@ architecture beh of reg is
         process (clk, en, reset)
             begin
                 if reset = '1' then 
-                    data_out <= "0000000";
+                    data_out <= "00000000";
                 end if ;  
                 if rising_edge(clk) then  
                     if en = '1' then 
