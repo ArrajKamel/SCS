@@ -19,7 +19,7 @@ architecture beh of pointer_register is
                     s_data_out <= "000";
                 elsif rising_edge(clk) then 
                     if en = '1' then 
-                        s_data_out <= data_out + 1; 
+                        s_data_out <= s_data_out + '1'; 
                     end if ; 
                 end if ; 
             end process ; 
