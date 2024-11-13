@@ -11,7 +11,7 @@ entity pointer_register is
 end entity; 
 
 architecture beh of pointer_register is
-    signal s_data_out : std_logic_vector(2 dowonto 0) := (others -> '0'); 
+    signal s_data_out : std_logic_vector(2 downto 0) := (others -> '0'); 
     begin
         process (clk, reset)
             begin

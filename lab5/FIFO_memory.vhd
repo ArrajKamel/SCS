@@ -94,7 +94,7 @@ architecture struct of FIFO_memory is
             data_out => s_decoder_out 
         );
         
-        temp(0)temp(1) <= s_decoder_out(1) and wr;  <= s_decoder_out(0) and wr;
+        temp(0)  <= s_decoder_out(0) and wr;
         fifo_0 : reg port map(
             clk => clk, 
             en => temp(0),
