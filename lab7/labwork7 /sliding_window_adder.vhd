@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity sliding_window_adder is
     Generic (
-        WINDOW_SIZE : integer := 5  -- Size of the sliding window
+        WINDOW_SIZE : integer := 5 
     );
     Port (
         aclk                : in  std_logic;           
@@ -22,7 +22,7 @@ architecture Behavioral of sliding_window_adder is
     type window_type is array (0 to WINDOW_SIZE - 1) of signed(31 downto 0);
     signal window        : window_type := (others => (others => '0')); 
     signal ptr           : integer range 0 to WINDOW_SIZE - 1 := 0;     
-    signal sum           : signed(31 downto 0) := (others => '0');    
+    signal sum           : std_logic_vector(31 downto 0) := (others => '0');    
     signal new_val       : signed(31 downto 0) := (others => '0');
     signal ready         : std_logic := '1';
 

@@ -5,16 +5,20 @@ use IEEE.STD_LOGIC_SIGNED.ALL;
 
 entity saturator is
     Port (
-        aclk                : in  std_logic;                       
+        aclk                : in  std_logic;  
+
         s_axis_val_tvalid   : in  std_logic;                            
         s_axis_val_tready   : out std_logic;                            
         s_axis_val_tdata    : in  std_logic_vector(31 downto 0);  
+
         s_axis_max_tvalid   : in  std_logic;                          
         s_axis_max_tready   : out std_logic;                          
         s_axis_max_tdata    : in  std_logic_vector(31 downto 0);
+
         s_axis_min_tvalid   : in  std_logic;                          
         s_axis_min_tready   : out std_logic;                          
         s_axis_min_tdata    : in  std_logic_vector(31 downto 0);
+
         m_axis_result_tvalid: out std_logic;                             
         m_axis_result_tready: in  std_logic;                             
         m_axis_result_tdata : out std_logic_vector(31 downto 0)             
@@ -29,7 +33,6 @@ signal state : state_type := S_READ;
 signal res_valid : STD_LOGIC := '0';
 signal result : STD_LOGIC_VECTOR (31 downto 0) := (others => '0');
 
--- signal a_ready, b_ready, op_ready : STD_LOGIC := '0';
 signal internal_ready, external_ready, inputs_valid : STD_LOGIC := '0';
 
 begin
@@ -49,7 +52,7 @@ begin
         if rising_edge(aclk) then
             case state is
                 when S_READ =>
-                    if external_ready = '1' and inputs_valid = '1' then
+                    if external_ready = '1' then
                         if s_axis_val_tdata > s_axis_max_tdata then
                             result <= s_axis_max_tdata;
                         elsif s_axis_val_tdata < s_axis_min_tdata then
