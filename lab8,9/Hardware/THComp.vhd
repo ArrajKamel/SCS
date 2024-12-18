@@ -2,28 +2,28 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_SIGNED.ALL;
 
-entity axi_threshold_comparator is
+entity THComp is
     Port (
-        aclk                : in  std_logic;
+        aclk                      : in  std_logic;
 
-        s_axis_g_plus_tvalid     : in  std_logic;
-        s_axis_g_plus_tready     : out std_logic;
-        s_axis_g_plus_tdata      : in  std_logic_vector(31 downto 0); 
+        s_axis_g_plus_tvalid      : in  std_logic;
+        s_axis_g_plus_tready      : out std_logic;
+        s_axis_g_plus_tdata       : in  std_logic_vector(31 downto 0); 
 
         s_axis_g_minus_tvalid     : in  std_logic;
         s_axis_g_minus_tready     : out std_logic;
         s_axis_g_minus_tdata      : in  std_logic_vector(31 downto 0);
 
-        threshold           : in  std_logic_vector(31 downto 0);
+        threshold                 : in  std_logic_vector(31 downto 0);
         
-        m_axis_anomaly_tvalid : out std_logic;
-        m_axis_anomaly_tready : in  std_logic;
+        m_axis_anomaly_tvalid     : out std_logic;
+        m_axis_anomaly_tready     : in  std_logic;
 
-        anomaly_flag        : out std_logic
+        anomaly_flag              : out std_logic
     );
-end axi_threshold_comparator;
+end THComp;
 
-architecture Behavioral of axi_threshold_comparator is
+architecture beh of THComp is
 
 type state_type is (S_READ, S_WRITE);
 signal state : state_type := S_READ;
@@ -61,4 +61,4 @@ begin
         end if;
     end process;
 
-end Behavioral;
+end beh;

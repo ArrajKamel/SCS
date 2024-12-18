@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_SIGNED.ALL;
 
-entity subtractor is
+entity adder is
     Port (
         aclk                : in  std_logic;
 
@@ -18,10 +18,10 @@ entity subtractor is
         m_axis_sum_tready  : in  std_logic;
         m_axis_sum_tdata   : out std_logic_vector(31 downto 0)
     );
-end subtractor;
+end adder;
 
 
-architecture Behavioral of saturator is
+architecture beh of adder is
 
     type state_type is (S_READ, S_WRITE);
     signal state : state_type := S_READ;
@@ -61,4 +61,4 @@ architecture Behavioral of saturator is
             end if;
         end process;
     
-    end Behavioral;
+    end beh;

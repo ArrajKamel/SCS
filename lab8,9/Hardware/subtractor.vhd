@@ -21,7 +21,7 @@ entity subtractor is
 end subtractor;
 
 
-architecture Behavioral of saturator is
+architecture beh of saturator is
 
     type state_type is (S_READ, S_WRITE);
     signal state : state_type := S_READ;
@@ -61,4 +61,4 @@ architecture Behavioral of saturator is
             end if;
         end process;
     
-    end Behavioral;
+    end beh;
